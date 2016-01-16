@@ -1,2 +1,4 @@
 *.pyc
 .idea/
+build
+django_backblazeb2_storage.egg-info
