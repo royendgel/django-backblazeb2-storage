@@ -34,12 +34,15 @@ for this you need to include `'b2_storage.authorise',` in your INSTALLED_APPS
 Storage Implimentation : 
 
 - save
+
     Save the file (overwrite if it already exists)
 
 - open
+
     Open a file using the filename (the latest version of the file).
 
 - delete
+
     Deletes the file (all versions of the file)
     
 
