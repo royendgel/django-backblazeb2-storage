@@ -1,5 +1,7 @@
 BACKBLAZE B2 Storage for Django
 ================================
+## NOT READY YET !!!!!!! working on it!! 
+
 
 BackBlaze B2 Storage for django.
 
