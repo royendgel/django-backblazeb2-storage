@@ -1,4 +1,6 @@
 import base64
+from contextlib import closing
+
 import requests
 import hashlib
 
@@ -60,6 +62,10 @@ class BackBlazeB2(object):
             pass
 
         return download_response.json()
+
+    def get_file_info(self, name):
+        headers = {'Authorization': self.authorization_token}
+        return requests.get("%s/file/%s/%s" % (self.download_url, self.bucket_name, name), headers=headers)
 
     def download_file(self, name):
         headers = {'Authorization': self.authorization_token}

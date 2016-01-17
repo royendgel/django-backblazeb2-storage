@@ -2,4 +2,4 @@
 Django BlackBlaze B2 Storage
 """
 
-__version__ = (0, 1)
+__version__ = (0, 2)
