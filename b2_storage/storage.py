@@ -1,10 +1,10 @@
 from tempfile import TemporaryFile
 
-import StringIO
+from io import BytesIO
 from django.conf import settings
 from django.core.files.storage import Storage
 from django.core.files.base import File
-from backblaze_b2 import BackBlazeB2
+from .backblaze_b2 import BackBlazeB2
 
 
 class B2Storage(Storage):
@@ -50,7 +50,7 @@ class B2Storage(Storage):
     def open(self, name, mode='rb'):
         resp = self.b2.download_file(name)
 
-        output = StringIO.StringIO()
+        output = BytesIO()
         output.write(resp)
         output.seek(0)
         return File(output, name)
