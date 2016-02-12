@@ -15,7 +15,7 @@ class BackBlazeB2(object):
         self.get_bucket_id_by_name()
 
     def authorize(self):
-        headers = {'Authorization': 'Basic: %s' % (base64.b64encode('%s:%s' % (self.account_id, self.app_key)))}
+        headers = {'Authorization': 'Basic: %s' % (base64.b64encode(('%s:%s' % (self.account_id, self.app_key)).encode('utf-8'))).decode('utf-8')}
         response = requests.get('https://api.backblaze.com/b2api/v1/b2_authorize_account', headers=headers)
         if response.status_code == 200:
             resp = response.json()
