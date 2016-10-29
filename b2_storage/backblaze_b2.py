@@ -62,7 +62,7 @@ class BackBlazeB2(object):
             attempts = 0
             while attempts <= 3 and download_response.status_code == 503:
                 download_response = requests.post(url, headers=headers, data=content.read())
-                attempts = attempts + 1
+                attempts += 1
         if download_response.status_code != 200:
             download_response.raise_for_status()
 
