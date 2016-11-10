@@ -6,25 +6,25 @@ BackBlaze B2 Storage for django.
 ###installation
 via PIP:
 
-`pip install django-backblazeb2-storage`
+    pip install django-backblazeb2-storage
 
 Manual:
 
-clone this repo local using `git clone git@github.com:royendgel/django-backblazeb2-storage.git`
-and run the `python setup.py install`
+clone this repo locally using `git clone git@github.com:royendgel/django-backblazeb2-storage.git`
+and run `python setup.py install`
 
 ###Usage
 
 Set this in ypour settings (usualy settings.py)
 
-BACKBLAZEB2_ACCOUNT_ID = 'your-account-id'
-BACKBLAZEB2_APP_KEY = 'your-app-key'
-BACKBLAZEB2_BUCKET = 'bucketname'
+    BACKBLAZEB2_ACCOUNT_ID = 'your-account-id'
+    BACKBLAZEB2_APP_KEY = 'your-app-key'
+    BACKBLAZEB2_BUCKET = 'bucketname'
 
 To make it your default django storage : 
 
 
-DEFAULT_FILE_STORAGE = 'b2_storage.B2Storage'
+    DEFAULT_FILE_STORAGE = 'b2_storage.B2Storage'
 
 
 if you are making alot of api calls I recommend you to use the b2_storage.authorise,
