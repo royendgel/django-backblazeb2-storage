@@ -55,6 +55,8 @@ class B2Storage(Storage):
         output.seek(0)
         return File(output, name)
 
+    def url(self, name):
+        return self.b2.get_file_url(name)
 
         #
         # def get_available_name(self, name, max_length=None):
@@ -72,5 +74,3 @@ class B2Storage(Storage):
         # def size(self, name):
         #     pass
         #
-        # def url(self, name):
-        #     pass
