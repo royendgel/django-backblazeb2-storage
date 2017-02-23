@@ -76,6 +76,9 @@ class BackBlazeB2(object):
         headers = {'Authorization': self.authorization_token}
         return requests.get("%s/file/%s/%s" % (self.download_url, self.bucket_name, name), headers=headers).content
 
+    def get_file_url(self, name):
+        return "%s/file/%s/%s" % (self.download_url, self.bucket_name, name)
+
     def get_bucket_id_by_name(self):
         """
         BackBlaze B2 should  make an endpoint to retrieve buckets by its name.
