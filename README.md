@@ -19,7 +19,7 @@ Set this in ypour settings (usualy settings.py)
 
     BACKBLAZEB2_ACCOUNT_ID = 'your-account-id'
     BACKBLAZEB2_APP_KEY = 'your-app-key'
-    BACKBLAZEB2_BUCKET = 'bucketname'
+    BACKBLAZEB2_BUCKET_NAME = 'bucketname'
 
 To make it your default django storage : 
 
