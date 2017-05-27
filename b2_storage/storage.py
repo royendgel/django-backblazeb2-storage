@@ -4,9 +4,12 @@ from io import BytesIO
 from django.conf import settings
 from django.core.files.storage import Storage
 from django.core.files.base import File
+from django.utils.deconstruct import deconstructible
+
 from .backblaze_b2 import BackBlazeB2
 
 
+@deconstructible
 class B2Storage(Storage):
     def __init__(self, account_id=None, app_key=None, bucket_name=None):
         overrides = locals()
