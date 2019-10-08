@@ -15,13 +15,13 @@ Manual:
 
 ### Usage
 
-Set this in your settings (usualy settings.py)
+Add these to your Django app's settings
 
     BACKBLAZEB2_ACCOUNT_ID = 'your-account-id'
     BACKBLAZEB2_APP_KEY = 'your-app-key'
     BACKBLAZEB2_BUCKET_NAME = 'bucketname'
     BACKBLAZEB2_BUCKET_ID = 'bucketid'
 
-To make it your default django storage :
+To make it your default django storage:
 
-    DEFAULT_FILE_STORAGE = 'b2_storage.B2Storage'
+    DEFAULT_FILE_STORAGE = 'b2_storage.storage.B2Storage'
