@@ -25,3 +25,8 @@ Add these to your Django app's settings
 To make it your default django storage:
 
     DEFAULT_FILE_STORAGE = 'b2_storage.storage.B2Storage'
+
+Due to the way B2 requires information from the Storage to retrieve and delete files, the FileField value contains a hybrid of 2 values. These are hidden by the Storage API, but they do require that the FileField have a longer than default `max_length` value. The recommended setting is below:
+
+    class UserUpload(models.Model):
+        file = models.FileField(upload_to='media/', max_length=500)
