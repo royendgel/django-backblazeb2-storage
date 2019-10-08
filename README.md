@@ -17,7 +17,7 @@ Manual:
 
 Add these to your Django app's settings
 
-    BACKBLAZEB2_ACCOUNT_ID = 'your-account-id'
+    BACKBLAZEB2_APP_KEY_ID = 'your-app-key-id'
     BACKBLAZEB2_APP_KEY = 'your-app-key'
     BACKBLAZEB2_BUCKET_NAME = 'bucketname'
     BACKBLAZEB2_BUCKET_ID = 'bucketid'
