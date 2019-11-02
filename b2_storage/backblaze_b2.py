@@ -1,5 +1,6 @@
 import base64
 from contextlib import closing
+from datetime import datetime, timedelta
 
 import requests
 import hashlib
@@ -9,13 +10,25 @@ B2_BASE = 'https://api.backblazeb2.com/b2api/v2'
 AUTHORIZE_URL = f'{B2_BASE}/b2_authorize_account'
 B2_API_PREFIX = '/b2api/v2/'
 
+# Backblaze claims that their Auth tokens last at most 24 hours. To avoid any
+# issues, and mitigate failure, we reauthorize after 1 hour.
+AUTHORIZATION_BUFFER_DEFAULT = timedelta(hours=1)
+
 class BackBlazeB2(object):
 
-    def __init__(self, key_id=None, app_key=None, bucket_id=None, bucket_name=None):
+    def __init__(
+        self,
+        key_id=None,
+        app_key=None,
+        bucket_id=None,
+        bucket_name=None,
+        reauthorization_buffer=AUTHORIZATION_BUFFER_DEFAULT
+    ):
         self.bucket_id = bucket_id
         self.key_id = key_id
         self.app_key = app_key
         self.bucket_name = bucket_name
+        self.reauthorization_buffer = reauthorization_buffer
         self.authorize()
 
     def authorize(self):
@@ -31,8 +44,18 @@ class BackBlazeB2(object):
         self.base_url = resp['apiUrl']
         self.download_url = resp['downloadUrl']
         self.authorization_token = resp['authorizationToken']
+        self.authorized_at = datetime.now()
+
+    def is_authorized(self):
+        return (
+            self.authorized_at is not None
+            and self.authorized_at + self.reauthorization_buffer > datetime.now()
+        )
 
     def get_upload_url(self):
+        if not self.is_authorized():
+            self.authorize()
+
         r = requests.get(
             self._build_url('b2_get_upload_url'),
             headers={'Authorization': self.authorization_token},
@@ -61,6 +84,9 @@ class BackBlazeB2(object):
         return upload_response.json()
 
     def get_file_info(self, file_id):
+        if not self.is_authorized():
+            self.authorize()
+
         r = requests.get(
             self._build_url('b2_get_file_info'),
             headers={'Authorization': self.authorization_token},
@@ -70,6 +96,9 @@ class BackBlazeB2(object):
         return r
 
     def download_file(self, name):
+        if not self.is_authorized():
+            self.authorize()
+
         r = requests.get(
             get_file_url(name),
             headers={'Authorization': self.authorization_token},
@@ -78,6 +107,9 @@ class BackBlazeB2(object):
         return r.content
 
     def delete_file_version(self, filename, file_id):
+        if not self.is_authorized():
+            self.authorize()
+
         r = requests.get(
             self._build_url('b2_delete_file_version'),
             headers={'Authorization': self.authorization_token},

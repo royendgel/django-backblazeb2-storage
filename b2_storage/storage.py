@@ -15,12 +15,16 @@ INTERNAL_SPLIT = ']['
 @deconstructible
 class B2Storage(Storage):
     def __init__(self):
-        self.b2 = BackBlazeB2(**{
+        kwargs = {
             'key_id': settings.BACKBLAZEB2_APP_KEY_ID,
             'app_key': settings.BACKBLAZEB2_APP_KEY,
             'bucket_name': settings.BACKBLAZEB2_BUCKET_NAME,
             'bucket_id': settings.BACKBLAZEB2_BUCKET_ID,
-        })
+        }
+        if getattr(settings, 'BACKBLAZEB2_AUTHORIZATION_BUFFER', None) is not None:
+            kwargs['reauthorization_buffer'] = settings.BACKBLAZEB2_AUTHORIZATION_BUFFER
+
+        self.b2 = BackBlazeB2(**kwargs)
 
     def _open(self, name, mode='rb'):
         resp = self.b2.download_file(name)
