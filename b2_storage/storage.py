@@ -23,6 +23,8 @@ class B2Storage(Storage):
         }
         if getattr(settings, 'BACKBLAZEB2_AUTHORIZATION_BUFFER', None) is not None:
             kwargs['reauthorization_buffer'] = settings.BACKBLAZEB2_AUTHORIZATION_BUFFER
+        if getattr(settings, 'BACKBLAZEB2_USER_AGENT', None) is not None:
+            kwargs['user_agent'] = settings.BACKBLAZEB2_USER_AGENT
 
         self.b2 = BackBlazeB2(**kwargs)
 
